@@ -1,7 +1,7 @@
-#ifdef ONLINE_JUDGE
+#ifndef U63
 #include <algorithm>
 #include <bitset>
-#include <cassert>
+#include <chrono>
 #include <cmath>
 #include <cstdio>
 #include <cstdlib>
@@ -16,7 +16,6 @@
 #include <map>
 #include <memory>
 #include <numeric>
-#include <print>
 #include <queue>
 #include <random>
 #include <ranges>
@@ -33,6 +32,11 @@ import std;
 import std.compat;
 #endif
 
+#include <cassert>
+
+#define all(a) (a).begin(), (a).end()
+#define rep(i, n) for (int i = 0; i < (n); ++i)
+
 using ll = long long;
 using pii = std::pair<int, int>;
 using pll = std::pair<ll, ll>;
@@ -45,23 +49,14 @@ using vpll = std::vector<pll>;
 using vvi = std::vector<std::vector<int>>;
 using vvl = std::vector<std::vector<ll>>;
 
-#define int long long
-#define all(a) (a).begin(), (a).end()
-
 template <typename L, typename R>
 bool chkmin(L &l, const R &r) {
-  if (r >= l)
-    return false;
-  l = r;
-  return true;
+  return r < l ? l = r, true : false;
 }
 
 template <typename L, typename R>
 bool chkmax(L &l, const R &r) {
-  if (r <= l)
-    return false;
-  l = r;
-  return true;
+  return r > l ? l = r, true : false;
 }
 
 void debug_out() { std::cerr << std::endl; }
@@ -72,7 +67,7 @@ void debug_out(Arg &&arg, Args &&...args) {
   debug_out(std::forward<Args>(args)...);
 }
 
-#ifndef ONLINE_JUDGE
+#ifdef U63
 #define DEBUG(...)                                                             \
   do {                                                                         \
     std::cerr << "[" #__VA_ARGS__ "]:";                                        \
@@ -86,7 +81,7 @@ namespace std {
 
 template <typename T1, typename T2>
 ostream &operator<<(ostream &os, const pair<T1, T2> &p) {
-  return os << "(" << p.first << ", " << p.second << ")";
+  return os << p.first << " " << p.second;
 }
 
 template <typename T1, typename T2>
@@ -96,14 +91,12 @@ istream &operator>>(istream &is, pair<T1, T2> &p) {
 
 template <typename T>
 ostream &operator<<(ostream &os, const vector<T> &v) {
-  os << "{";
   if (!v.empty()) {
     os << v[0];
     for (int i = 1; i < std::ssize(v); ++i) {
-      os << ", " << v[i];
+      os << " " << v[i];
     }
   }
-  os << "}";
   return os;
 }
 
@@ -114,19 +107,50 @@ istream &operator>>(istream &is, vector<T> &v) {
   return is;
 }
 
+template <typename T, size_t N>
+ostream &operator<<(ostream &os, const array<T, N> &a) {
+  if (!a.empty()) {
+    os << a[0];
+    for (int i = 1; i < N; ++i) {
+      os << " " << a[i];
+    }
+  }
+  return os;
+}
+
+template <typename T, size_t N>
+istream &operator>>(istream &is, array<T, N> &a) {
+  for (auto &el : a)
+    std::cin >> el;
+  return is;
+}
+
+template <typename T>
+ostream &operator<<(ostream &os, span<T> s) {
+  if (!s.empty()) {
+    os << s[0];
+    for (int i = 1; i < std::ssize(s); ++i) {
+      os << " " << s[i];
+    }
+  }
+  return os;
+}
+
 } // namespace std
 
 // BEGIN //////////////////////////////////////////////////////////////////////
 
-void solve() {}
+using namespace std;
+
+void run([[maybe_unused]] int testNo) {}
 
 int32_t main() {
   std::ios::sync_with_stdio(false);
   std::cin.tie(nullptr);
 
-  int tests;
+  int tests = 1;
   std::cin >> tests;
-  while (tests--) {
-    solve();
+  for (int testNo = 1; testNo <= tests; ++testNo) {
+    run(testNo);
   }
 }
