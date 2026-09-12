@@ -4,6 +4,8 @@
 #include <numeric>
 #include <type_traits>
 
+namespace u63 {
+
 template <typename ModProvider>
 class ModularRing32 {
   int32_t r{0};
@@ -158,4 +160,4 @@ struct VariableModProvider {
 };
 using VariableModInt32 = ModularRing32<VariableModProvider>;
 
-using mint = ModInt32<998'244'353>;
+} // namespace u63
