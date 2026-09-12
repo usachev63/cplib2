@@ -1,53 +1,9 @@
-#ifndef U63
-#include <algorithm>
-#include <bitset>
-#include <chrono>
-#include <cmath>
-#include <cstdio>
-#include <cstdlib>
-#include <cstring>
-#include <ctime>
-#include <deque>
-#include <fstream>
-#include <functional>
-#include <iomanip>
-#include <iostream>
-#include <list>
-#include <map>
-#include <memory>
-#include <numeric>
-#include <queue>
-#include <random>
-#include <ranges>
-#include <set>
-#include <span>
-#include <sstream>
-#include <stack>
-#include <string>
-#include <unordered_map>
-#include <unordered_set>
-#include <vector>
-#else
-import std;
-import std.compat;
-#endif
-
-#include <cassert>
+#include <bits/stdc++.h>
 
 #define all(a) (a).begin(), (a).end()
 #define rep(i, n) for (int i = 0; i < (n); ++i)
 
 using ll = long long;
-using pii = std::pair<int, int>;
-using pll = std::pair<ll, ll>;
-using pil = std::pair<int, ll>;
-using pli = std::pair<ll, int>;
-using vi = std::vector<int>;
-using vl = std::vector<ll>;
-using vpii = std::vector<pii>;
-using vpll = std::vector<pll>;
-using vvi = std::vector<std::vector<int>>;
-using vvl = std::vector<std::vector<ll>>;
 
 template <typename L, typename R>
 bool chkmin(L &l, const R &r) {
@@ -138,9 +94,12 @@ ostream &operator<<(ostream &os, span<T> s) {
 
 } // namespace std
 
+namespace u63 {}
+
 // BEGIN //////////////////////////////////////////////////////////////////////
 
 using namespace std;
+using namespace u63;
 
 void run([[maybe_unused]] int testNo) {}
 
