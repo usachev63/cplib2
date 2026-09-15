@@ -4,6 +4,7 @@
 #include <iostream>
 #include <type_traits>
 #include <variant>
+#include <vector>
 
 namespace u63 {
 
@@ -200,7 +201,7 @@ struct Line2 {
 
   constexpr T operator()(Point2<T> p) const { return A * p.x + B * p.y - C; }
 
-  Vector2<T> normal() const { return {A, B}; }
+  constexpr Vector2<T> normal() const { return {A, B}; }
 };
 
 template <typename T>
@@ -432,6 +433,61 @@ constexpr double dist(LineSegment2<T> f, LineSegment2<T> g) {
   if (checkIntersect1(f, g))
     return 0.0;
   return std::min({dist(f, g.A), dist(f, g.B), dist(g, f.A), dist(g, f.B)});
+}
+
+template <typename T>
+std::vector<Point2<T>> convexHullGraham(std::vector<Point2<T>> points) {
+  int n = std::ssize(points);
+  if (n == 0)
+    return {};
+  if (n == 1)
+    return {points[0], points[0]};
+
+  for (int i = 1; i < n; ++i)
+    if (points[i] < points[0]) // lexicographical
+      std::swap(points[0], points[i]);
+  std::sort(
+      points.begin() + 1, points.end(), [&points](Point2<T> p1, Point2<T> p2) {
+        Vector2 v1{points[0], p1}, v2{points[0], p2};
+        return cross(v1, v2) > 0 || (cross(v1, v2) == 0 && len2(v1) < len2(v2));
+      });
+  points.push_back(points[0]);
+  std::vector<Point2<T>> hull;
+  for (int i = 0; i < std::ssize(points); ++i) {
+    while (std::ssize(hull) >= 2 &&
+           cross(Vector2{hull.end()[-2], hull.end()[-1]},
+                 Vector2{hull.end()[-2], points[i]}) <= 0) {
+      Vector2 u{hull.end()[-2], hull.end()[-1]};
+      Vector2 v{hull.end()[-1], points[i]};
+      if (cross(u, v) > 0 || (cross(u, v) == 0 && dot(u, v) < 0))
+        break;
+      hull.pop_back();
+    }
+    hull.push_back(points[i]);
+  }
+  return hull;
+}
+
+template <typename T>
+std::vector<Point2<T>> convexHullAndrew(std::vector<Point2<T>> points) {
+  if (points.empty())
+    return {};
+  std::sort(points.begin(), points.end());
+  points.erase(std::unique(points.begin(), points.end()), points.end());
+  std::vector<Point2<T>> hull;
+  for (int rot = 0; rot < 2; ++rot) {
+    int sz0 = std::ssize(hull) - rot;
+    for (auto A : points) {
+      while (std::ssize(hull) - sz0 >= 2 &&
+             cross(Vector2{hull.end()[-2], hull.end()[-1]},
+                   Vector2{hull.end()[-1], A}) <= 0) {
+        hull.pop_back();
+      }
+      hull.push_back(A);
+    }
+    std::reverse(points.begin(), points.end());
+  }
+  return hull;
 }
 
 } // namespace u63
