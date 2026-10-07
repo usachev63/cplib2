@@ -1,7 +1,8 @@
 #include <string>
 #include <vector>
 
-inline std::vector<int> prefixFunction(std::string_view s) {
+template <typename S>
+std::vector<int> prefixFunction(S &&s) {
   int n = std::ssize(s);
   std::vector<int> pi(n);
   for (int i = 1, j = 0; i < n; ++i) {
