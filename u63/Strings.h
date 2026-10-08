@@ -1,6 +1,8 @@
 #include <string>
 #include <vector>
 
+namespace u63 {
+
 template <typename S>
 std::vector<int> prefixFunction(S &&s) {
   int n = std::ssize(s);
@@ -14,3 +16,5 @@ std::vector<int> prefixFunction(S &&s) {
   }
   return pi;
 }
+
+} // namespace u63
