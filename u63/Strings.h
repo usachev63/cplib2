@@ -1,3 +1,4 @@
+#include <span>
 #include <string>
 #include <vector>
 
@@ -15,6 +16,27 @@ std::vector<int> prefixFunction(S &&s) {
     pi[i] = j;
   }
   return pi;
+}
+
+template <int A, int A0, typename S>
+std::vector<std::array<int, A>> kmpAutomaton(S &&s, std::span<const int> pi) {
+  int m = ssize(s);
+  std::vector<std::array<int, A>> aut(m + 1);
+  for (int j = 0; j <= m; ++j) {
+    for (int c = 0; c < A; ++c) {
+      if (j > 0 && (j == m || c != s[j] - A0))
+        aut[j][c] = aut[pi[j - 1]][c];
+      else
+        aut[j][c] = j + (c == s[j] - A0);
+    }
+  }
+  return aut;
+}
+
+template <int A, int A0, typename S>
+std::vector<std::array<int, A>> kmpAutomaton(S &&s) {
+  std::vector<int> pi = prefixFunction(s);
+  return kmpAutomaton<A, A0, S>(s, pi);
 }
 
 } // namespace u63
