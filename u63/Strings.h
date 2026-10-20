@@ -4,8 +4,7 @@
 
 namespace u63 {
 
-template <typename S>
-std::vector<int> prefixFunction(S &&s) {
+template <typename S> std::vector<int> prefix_function(S &&s) {
   int n = std::ssize(s);
   std::vector<int> pi(n);
   for (int i = 1, j = 0; i < n; ++i) {
@@ -19,7 +18,7 @@ std::vector<int> prefixFunction(S &&s) {
 }
 
 template <int A, int A0, typename S>
-std::vector<std::array<int, A>> kmpAutomaton(S &&s, std::span<const int> pi) {
+std::vector<std::array<int, A>> kmp_automaton(S &&s, std::span<const int> pi) {
   int m = ssize(s);
   std::vector<std::array<int, A>> aut(m + 1);
   for (int j = 0; j <= m; ++j) {
@@ -34,13 +33,12 @@ std::vector<std::array<int, A>> kmpAutomaton(S &&s, std::span<const int> pi) {
 }
 
 template <int A, int A0, typename S>
-std::vector<std::array<int, A>> kmpAutomaton(S &&s) {
-  std::vector<int> pi = prefixFunction(s);
-  return kmpAutomaton<A, A0, S>(s, pi);
+std::vector<std::array<int, A>> kmp_automaton(S &&s) {
+  std::vector<int> pi = prefix_function(s);
+  return kmp_automaton<A, A0, S>(s, pi);
 }
 
-template <typename S>
-std::vector<int> zFunction(S &&s) {
+template <typename S> std::vector<int> z_function(S &&s) {
   int n = std::ssize(s);
   std::vector<int> z(n);
   for (int i = 1, l = 0, r = 0; i < n; ++i) {
