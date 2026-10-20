@@ -4,7 +4,8 @@
 
 namespace u63 {
 
-template <typename S> std::vector<int> prefix_function(S &&s) {
+template <typename S>
+std::vector<int> prefix_function(S &&s) {
   int n = std::ssize(s);
   std::vector<int> pi(n);
   for (int i = 1, j = 0; i < n; ++i) {
@@ -38,7 +39,8 @@ std::vector<std::array<int, A>> kmp_automaton(S &&s) {
   return kmp_automaton<A, A0, S>(s, pi);
 }
 
-template <typename S> std::vector<int> z_function(S &&s) {
+template <typename S>
+std::vector<int> z_function(S &&s) {
   int n = std::ssize(s);
   std::vector<int> z(n);
   for (int i = 1, l = 0, r = 0; i < n; ++i) {

@@ -8,7 +8,8 @@
 
 namespace u63 {
 
-template <typename T> constexpr int sgn(T x) {
+template <typename T>
+constexpr int sgn(T x) {
   if (x > 0)
     return +1;
   if (x < 0)
@@ -30,16 +31,20 @@ struct Vector2 {
   constexpr Vector2(Vector2<T> A, Vector2<T> B) : x{B.x - A.x}, y{B.y - A.y} {}
 };
 
-template <typename T> using Point2 = Vector2<T>;
+template <typename T>
+using Point2 = Vector2<T>;
 
-template <typename T> constexpr auto tie(const Vector2<T> &v) {
+template <typename T>
+constexpr auto tie(const Vector2<T> &v) {
   return std::tie(v.x, v.y);
 }
 
-template <typename T> constexpr bool operator==(Vector2<T> u, Vector2<T> v) {
+template <typename T>
+constexpr bool operator==(Vector2<T> u, Vector2<T> v) {
   return tie(u) == tie(v);
 }
-template <typename T> constexpr bool operator!=(Vector2<T> u, Vector2<T> v) {
+template <typename T>
+constexpr bool operator!=(Vector2<T> u, Vector2<T> v) {
   return !(u == v);
 }
 
@@ -52,7 +57,10 @@ template <typename T>
 constexpr Vector2<T> operator+(Vector2<T> u, Vector2<T> v) {
   return {u.x + v.x, u.y + v.y};
 }
-template <typename T> constexpr Vector2<T> operator+(Vector2<T> v) { return v; }
+template <typename T>
+constexpr Vector2<T> operator+(Vector2<T> v) {
+  return v;
+}
 template <typename T>
 constexpr Vector2<T> &operator-=(Vector2<T> &u, Vector2<T> v) {
   u.x -= v.x, u.y -= v.y;
@@ -62,28 +70,35 @@ template <typename T>
 constexpr Vector2<T> operator-(Vector2<T> u, Vector2<T> v) {
   return {u.x - v.x, u.y - v.y};
 }
-template <typename T> constexpr Vector2<T> operator-(Vector2<T> v) {
+template <typename T>
+constexpr Vector2<T> operator-(Vector2<T> v) {
   return {-v.x, -v.y};
 }
-template <typename T> constexpr Vector2<T> &operator*=(Vector2<T> &v, T k) {
+template <typename T>
+constexpr Vector2<T> &operator*=(Vector2<T> &v, T k) {
   v.x *= k, v.y *= k;
   return v;
 }
-template <typename T> constexpr Vector2<T> operator*(Vector2<T> v, T k) {
+template <typename T>
+constexpr Vector2<T> operator*(Vector2<T> v, T k) {
   return {v.x * k, v.y * k};
 }
-template <typename T> constexpr Vector2<T> operator*(T k, Vector2<T> v) {
+template <typename T>
+constexpr Vector2<T> operator*(T k, Vector2<T> v) {
   return v * k;
 }
 
-template <typename T> constexpr T dot(Vector2<T> u, Vector2<T> v) {
+template <typename T>
+constexpr T dot(Vector2<T> u, Vector2<T> v) {
   return u.x * v.x + u.y * v.y;
 }
-template <typename T> constexpr T operator*(Vector2<T> u, Vector2<T> v) {
+template <typename T>
+constexpr T operator*(Vector2<T> u, Vector2<T> v) {
   return dot(u, v);
 }
 
-template <typename T> constexpr T cross(Vector2<T> u, Vector2<T> v) {
+template <typename T>
+constexpr T cross(Vector2<T> u, Vector2<T> v) {
   return u.x * v.y - u.y * v.x;
 }
 
@@ -91,26 +106,32 @@ template <typename T>
 std::istream &operator>>(std::istream &is, Vector2<T> &v) {
   return is >> v.x >> v.y;
 }
-template <typename T> std::ostream &operator<<(std::ostream &os, Vector2<T> v) {
+template <typename T>
+std::ostream &operator<<(std::ostream &os, Vector2<T> v) {
   return os << v.x << " " << v.y;
 }
 
-template <typename T> constexpr T len2(Vector2<T> v) {
+template <typename T>
+constexpr T len2(Vector2<T> v) {
   return v.x * v.x + v.y * v.y;
 }
-template <typename T> constexpr T dist2(Point2<T> A, Point2<T> B) {
+template <typename T>
+constexpr T dist2(Point2<T> A, Point2<T> B) {
   return len2(B - A);
 }
 
-template <typename T> constexpr double len(Vector2<T> v) {
+template <typename T>
+constexpr double len(Vector2<T> v) {
   return std::sqrt(len2(v));
 }
-template <typename T> constexpr double dist(Point2<T> A, Point2<T> B) {
+template <typename T>
+constexpr double dist(Point2<T> A, Point2<T> B) {
   return std::sqrt(dist2(A, B));
 }
 
 /// \pre v != 0
-template <typename T> constexpr Vector2<double> normalize(Vector2<T> v) {
+template <typename T>
+constexpr Vector2<double> normalize(Vector2<T> v) {
   double L = len(v);
   return {v.x / L, v.y / L};
 }
@@ -119,20 +140,24 @@ constexpr bool parallel(Vector2<long long> u, Vector2<long long> v) {
   return cross(u, v) == 0;
 }
 
-template <typename T> constexpr Vector2<T> rotate_plus_90(Vector2<T> v) {
+template <typename T>
+constexpr Vector2<T> rotate_plus_90(Vector2<T> v) {
   return {-v.y, v.x};
 }
-template <typename T> constexpr Vector2<T> rotate_minus_90(Vector2<T> v) {
+template <typename T>
+constexpr Vector2<T> rotate_minus_90(Vector2<T> v) {
   return {v.y, -v.x};
 }
 
 /// In range [-pi, pi]
-template <typename T> constexpr double angle(Vector2<T> v) {
+template <typename T>
+constexpr double angle(Vector2<T> v) {
   return std::atan2(v.y, v.x);
 }
 
 /// In range [-pi, pi]
-template <typename T> constexpr double angle(Vector2<T> u, Vector2<T> v) {
+template <typename T>
+constexpr double angle(Vector2<T> u, Vector2<T> v) {
   return std::atan2(cross(u, v), dot(u, v));
 }
 
@@ -143,7 +168,8 @@ constexpr double angle(Point2<T> O, Point2<T> A, Point2<T> B) {
 }
 
 /// Ax + By = C
-template <typename T> struct Line2 {
+template <typename T>
+struct Line2 {
   T A{};
   T B{};
   T C{};
@@ -166,7 +192,8 @@ std::ostream &operator<<(std::ostream &os, Line2<T> line) {
   return os << line.A << " " << line.B << " " << line.C << "\n";
 }
 
-template <typename T> constexpr Line2<double> normalize(Line2<T> line) {
+template <typename T>
+constexpr Line2<double> normalize(Line2<T> line) {
   double L = len(line.normal());
   return {static_cast<double>(line.A) / L, static_cast<double>(line.B) / L,
           static_cast<double>(line.C) / L};
@@ -205,7 +232,8 @@ constexpr double dist(Line2<long long> l1, Line2<long long> l2) {
   return std::abs(c1 - c2);
 }
 
-template <typename T> struct TwoPointsLine2 {
+template <typename T>
+struct TwoPointsLine2 {
   Point2<T> A{};
   Point2<T> B{};
 
@@ -230,12 +258,14 @@ constexpr bool contains(TwoPointsLine2<long long> l, Point2<long long> P) {
 }
 
 /// \pre l is not degenerate
-template <typename T> constexpr double dist(TwoPointsLine2<T> l, Point2<T> P) {
+template <typename T>
+constexpr double dist(TwoPointsLine2<T> l, Point2<T> P) {
   Vector2 AB{l.A, l.B}, AP{l.A, P};
   return std::abs(cross(AB, AP)) / len(AB);
 }
 
-template <typename T> struct HalfLine2 {
+template <typename T>
+struct HalfLine2 {
   Point2<T> A{};
   Point2<T> B{};
 
@@ -264,7 +294,8 @@ constexpr bool contains(HalfLine2<long long> r, Point2<long long> P) {
 }
 
 /// \pre r is not degenerate
-template <typename T> constexpr double dist(HalfLine2<T> r, Point2<T> P) {
+template <typename T>
+constexpr double dist(HalfLine2<T> r, Point2<T> P) {
   Vector2 AB{r.A, r.B}, AP{r.A, P};
   if (dot(AB, AP) >= 0) // continuous
     return dist(TwoPointsLine2{r.A, r.B}, P);
@@ -272,7 +303,8 @@ template <typename T> constexpr double dist(HalfLine2<T> r, Point2<T> P) {
     return dist(r.A, P);
 }
 
-template <typename T> struct LineSegment2 {
+template <typename T>
+struct LineSegment2 {
   Point2<T> A{};
   Point2<T> B{};
 
@@ -285,7 +317,8 @@ std::ostream &operator<<(std::ostream &os, const LineSegment2<T> &f) {
   return os << f.A << " " << f.B << "\n";
 }
 
-template <typename T> constexpr bool degenerate(LineSegment2<T> f) {
+template <typename T>
+constexpr bool degenerate(LineSegment2<T> f) {
   return f.A == f.B;
 }
 
@@ -370,7 +403,8 @@ std::variant<
   };
 }
 
-template <typename T> constexpr double dist(LineSegment2<T> f, Point2<T> P) {
+template <typename T>
+constexpr double dist(LineSegment2<T> f, Point2<T> P) {
   Vector2 AB{f.A, f.B}, AP{f.A, P}, BA{f.B, f.A}, BP{f.B, P};
   if (dot(AB, AP) <= 0) // continuous
     return dist(f.A, P);

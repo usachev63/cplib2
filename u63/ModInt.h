@@ -6,7 +6,8 @@
 
 namespace u63 {
 
-template <typename ModProvider> class ModularRing32 {
+template <typename ModProvider>
+class ModularRing32 {
   int32_t r{0};
 
 public:
@@ -28,7 +29,8 @@ public:
     return result;
   }
 
-  template <typename T> explicit constexpr operator T() {
+  template <typename T>
+  explicit constexpr operator T() {
     return static_cast<T>(r);
   }
 
