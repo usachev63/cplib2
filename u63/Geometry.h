@@ -195,7 +195,8 @@ std::ostream &operator<<(std::ostream &os, Line2<T> line) {
 template <typename T>
 constexpr Line2<double> normalize(Line2<T> line) {
   double L = len(line.normal());
-  return {line.A / L, line.B / L, line.C / L};
+  return {static_cast<double>(line.A) / L, static_cast<double>(line.B) / L,
+          static_cast<double>(line.C) / L};
 }
 
 constexpr bool parallel(Line2<long long> l1, Line2<long long> l2) {
@@ -213,11 +214,12 @@ constexpr std::optional<Point2<double>> intersect(Line2<long long> l1,
     return std::nullopt;
   auto det_x = l1.C * l2.B - l1.B * l2.C;
   auto det_y = l1.A * l2.C - l1.C * l2.A;
-  return {{det_x / static_cast<double>(det), det_y / static_cast<double>(det)}};
+  return {{static_cast<double>(det_x) / static_cast<double>(det),
+           static_cast<double>(det_y) / static_cast<double>(det)}};
 }
 
 constexpr double dist(Line2<long long> l, Point2<long long> P) {
-  return std::abs(l(P) / len(l.normal()));
+  return std::abs(static_cast<double>(l(P)) / len(l.normal()));
 }
 
 constexpr double dist(Line2<long long> l1, Line2<long long> l2) {
