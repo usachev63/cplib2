@@ -11,8 +11,7 @@ class ModularRing32 {
   int32_t r{0};
 
 public:
-  static_assert(
-      std::is_same_v<std::decay_t<decltype(ModProvider::value)>, int32_t>);
+  static_assert(std::is_same_v<std::decay_t<decltype(ModProvider::value)>, int32_t>);
   static constexpr int32_t mod() { return ModProvider::value; }
 
   constexpr ModularRing32() : r{0} {}
@@ -40,10 +39,7 @@ public:
       r -= mod();
     return *this;
   }
-  constexpr friend ModularRing32 operator+(ModularRing32 lhs,
-                                           ModularRing32 rhs) {
-    return lhs += rhs;
-  }
+  constexpr friend ModularRing32 operator+(ModularRing32 lhs, ModularRing32 rhs) { return lhs += rhs; }
   constexpr ModularRing32 operator+() const { return *this; }
   constexpr ModularRing32 &operator++() const { return *this += 1; }
   constexpr ModularRing32 operator++(int) {
@@ -58,10 +54,7 @@ public:
       r += mod();
     return *this;
   }
-  constexpr friend ModularRing32 operator-(ModularRing32 lhs,
-                                           ModularRing32 rhs) {
-    return lhs -= rhs;
-  }
+  constexpr friend ModularRing32 operator-(ModularRing32 lhs, ModularRing32 rhs) { return lhs -= rhs; }
   constexpr ModularRing32 operator-() const {
     ModularRing32 neg{*this};
     if (neg.r > 0)
@@ -79,10 +72,7 @@ public:
     r = static_cast<int64_t>(r) * other.r % mod();
     return *this;
   }
-  constexpr friend ModularRing32 operator*(ModularRing32 lhs,
-                                           ModularRing32 rhs) {
-    return lhs *= rhs;
-  }
+  constexpr friend ModularRing32 operator*(ModularRing32 lhs, ModularRing32 rhs) { return lhs *= rhs; }
 
   constexpr ModularRing32 bpow(int64_t power) const {
     ModularRing32 result{1};
@@ -96,32 +86,15 @@ public:
 
   constexpr ModularRing32 inv() const { return ModularRing32{calc_inverse(r)}; }
 
-  constexpr ModularRing32 &operator/=(ModularRing32 other) {
-    return *this *= other.inv();
-  }
-  constexpr friend ModularRing32 operator/(ModularRing32 lhs,
-                                           ModularRing32 rhs) {
-    return lhs /= rhs;
-  }
+  constexpr ModularRing32 &operator/=(ModularRing32 other) { return *this *= other.inv(); }
+  constexpr friend ModularRing32 operator/(ModularRing32 lhs, ModularRing32 rhs) { return lhs /= rhs; }
 
-  constexpr friend bool operator==(ModularRing32 lhs, ModularRing32 rhs) {
-    return lhs.r == rhs.r;
-  }
-  constexpr friend bool operator!=(ModularRing32 lhs, ModularRing32 rhs) {
-    return lhs.r != rhs.r;
-  }
-  constexpr friend bool operator<(ModularRing32 lhs, ModularRing32 rhs) {
-    return lhs.r < rhs.r;
-  }
-  constexpr friend bool operator<=(ModularRing32 lhs, ModularRing32 rhs) {
-    return lhs.r <= rhs.r;
-  }
-  constexpr friend bool operator>(ModularRing32 lhs, ModularRing32 rhs) {
-    return lhs.r > rhs.r;
-  }
-  constexpr friend bool operator>=(ModularRing32 lhs, ModularRing32 rhs) {
-    return lhs.r >= rhs.r;
-  }
+  constexpr friend bool operator==(ModularRing32 lhs, ModularRing32 rhs) { return lhs.r == rhs.r; }
+  constexpr friend bool operator!=(ModularRing32 lhs, ModularRing32 rhs) { return lhs.r != rhs.r; }
+  constexpr friend bool operator<(ModularRing32 lhs, ModularRing32 rhs) { return lhs.r < rhs.r; }
+  constexpr friend bool operator<=(ModularRing32 lhs, ModularRing32 rhs) { return lhs.r <= rhs.r; }
+  constexpr friend bool operator>(ModularRing32 lhs, ModularRing32 rhs) { return lhs.r > rhs.r; }
+  constexpr friend bool operator>=(ModularRing32 lhs, ModularRing32 rhs) { return lhs.r >= rhs.r; }
 
   friend std::istream &operator>>(std::istream &is, ModularRing32 &x) {
     int64_t y;
@@ -129,9 +102,7 @@ public:
     x = ModularRing32{y};
     return is;
   }
-  friend std::ostream &operator<<(std::ostream &os, ModularRing32 x) {
-    return os << x.r;
-  }
+  friend std::ostream &operator<<(std::ostream &os, ModularRing32 x) { return os << x.r; }
 
 private:
   static constexpr int64_t calc_inverse(int64_t a);

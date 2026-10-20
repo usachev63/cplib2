@@ -26,8 +26,7 @@ struct Vector2 {
   constexpr Vector2() = default;
   constexpr Vector2(T x, T y) : x{x}, y{y} {}
   template <typename U>
-  constexpr Vector2(const Vector2<U> &other)
-      : x{static_cast<T>(other.x)}, y{static_cast<T>(other.y)} {}
+  constexpr Vector2(const Vector2<U> &other) : x{static_cast<T>(other.x)}, y{static_cast<T>(other.y)} {}
   constexpr Vector2(Vector2<T> A, Vector2<T> B) : x{B.x - A.x}, y{B.y - A.y} {}
 };
 
@@ -136,9 +135,7 @@ constexpr Vector2<double> normalize(Vector2<T> v) {
   return {v.x / L, v.y / L};
 }
 
-constexpr bool parallel(Vector2<long long> u, Vector2<long long> v) {
-  return cross(u, v) == 0;
-}
+constexpr bool parallel(Vector2<long long> u, Vector2<long long> v) { return cross(u, v) == 0; }
 
 template <typename T>
 constexpr Vector2<T> rotate_plus_90(Vector2<T> v) {
@@ -179,8 +176,7 @@ struct Line2 {
   constexpr Line2(T A, T B, T C) : A{A}, B{B}, C{C} {}
   /// Line through two points
   /// \pre P != Q
-  constexpr Line2(Point2<T> P, Point2<T> Q)
-      : A{-(Q.y - P.y)}, B{Q.x - P.x}, C{A * P.x + B * P.y} {}
+  constexpr Line2(Point2<T> P, Point2<T> Q) : A{-(Q.y - P.y)}, B{Q.x - P.x}, C{A * P.x + B * P.y} {}
 
   constexpr T operator()(Point2<T> p) const { return A * p.x + B * p.y - C; }
 
@@ -195,27 +191,21 @@ std::ostream &operator<<(std::ostream &os, Line2<T> line) {
 template <typename T>
 constexpr Line2<double> normalize(Line2<T> line) {
   double L = len(line.normal());
-  return {static_cast<double>(line.A) / L, static_cast<double>(line.B) / L,
-          static_cast<double>(line.C) / L};
+  return {static_cast<double>(line.A) / L, static_cast<double>(line.B) / L, static_cast<double>(line.C) / L};
 }
 
-constexpr bool parallel(Line2<long long> l1, Line2<long long> l2) {
-  return parallel(l1.normal(), l2.normal());
-}
+constexpr bool parallel(Line2<long long> l1, Line2<long long> l2) { return parallel(l1.normal(), l2.normal()); }
 
-constexpr bool contains(Line2<long long> l, Point2<long long> P) {
-  return l(P) == 0;
-}
+constexpr bool contains(Line2<long long> l, Point2<long long> P) { return l(P) == 0; }
 
-constexpr std::optional<Point2<double>> intersect(Line2<long long> l1,
-                                                  Line2<long long> l2) {
+constexpr std::optional<Point2<double>> intersect(Line2<long long> l1, Line2<long long> l2) {
   auto det = l1.A * l2.B - l1.B * l2.A;
   if (det == 0)
     return std::nullopt;
   auto det_x = l1.C * l2.B - l1.B * l2.C;
   auto det_y = l1.A * l2.C - l1.C * l2.A;
-  return {{static_cast<double>(det_x) / static_cast<double>(det),
-           static_cast<double>(det_y) / static_cast<double>(det)}};
+  return {
+      {static_cast<double>(det_x) / static_cast<double>(det), static_cast<double>(det_y) / static_cast<double>(det)}};
 }
 
 constexpr double dist(Line2<long long> l, Point2<long long> P) {
@@ -240,14 +230,12 @@ struct TwoPointsLine2 {
   constexpr TwoPointsLine2() = default;
   constexpr TwoPointsLine2(Point2<T> A, Point2<T> B) : A{A}, B{B} {}
   template <typename U>
-  constexpr TwoPointsLine2(TwoPointsLine2<U> other)
-      : A{static_cast<T>(other.A)}, B{static_cast<T>(other.B)} {}
+  constexpr TwoPointsLine2(TwoPointsLine2<U> other) : A{static_cast<T>(other.A)}, B{static_cast<T>(other.B)} {}
 };
 
 constexpr bool degenerate(TwoPointsLine2<long long> l) { return l.A == l.B; }
 
-constexpr bool parallel(TwoPointsLine2<long long> l1,
-                        TwoPointsLine2<long long> l2) {
+constexpr bool parallel(TwoPointsLine2<long long> l1, TwoPointsLine2<long long> l2) {
   return parallel(Vector2{l1.A, l1.B}, Vector2{l2.A, l2.B});
 }
 
@@ -272,8 +260,7 @@ struct HalfLine2 {
   constexpr HalfLine2() = default;
   constexpr HalfLine2(Point2<T> A, Point2<T> B) : A{A}, B{B} {}
   template <typename U>
-  constexpr HalfLine2(HalfLine2<U> other)
-      : A{static_cast<T>(other.A)}, B{static_cast<T>(other.B)} {}
+  constexpr HalfLine2(HalfLine2<U> other) : A{static_cast<T>(other.A)}, B{static_cast<T>(other.B)} {}
 };
 
 template <typename T>
@@ -342,10 +329,8 @@ constexpr bool contains1(LineSegment2<long long> f, Point2<long long> P) {
 }
 
 /// \pre f, g are not degenerate
-constexpr bool check_intersect(LineSegment2<long long> f,
-                               LineSegment2<long long> g) {
-  if (contains(f, g.A) || contains(f, g.B) || contains(g, f.A) ||
-      contains(g, f.B)) {
+constexpr bool check_intersect(LineSegment2<long long> f, LineSegment2<long long> g) {
+  if (contains(f, g.A) || contains(f, g.B) || contains(g, f.A) || contains(g, f.B)) {
     return true;
   }
   auto [A, B] = f;
@@ -359,8 +344,7 @@ constexpr bool check_intersect(LineSegment2<long long> f,
   return true;
 }
 
-constexpr bool check_intersect1(LineSegment2<long long> f,
-                                LineSegment2<long long> g) {
+constexpr bool check_intersect1(LineSegment2<long long> f, LineSegment2<long long> g) {
   if (degenerate(f))
     return contains1(g, f.A);
   if (degenerate(g))
@@ -368,10 +352,8 @@ constexpr bool check_intersect1(LineSegment2<long long> f,
   return check_intersect(f, g);
 }
 
-std::variant<
-    std::monostate, Point2<double>,
-    LineSegment2<long long>> constexpr intersect1(LineSegment2<long long> f,
-                                                  LineSegment2<long long> g) {
+std::variant<std::monostate, Point2<double>, LineSegment2<long long>> constexpr intersect1(LineSegment2<long long> f,
+                                                                                           LineSegment2<long long> g) {
   if (!check_intersect1(f, g))
     return {};
   if (degenerate(f))
@@ -431,17 +413,15 @@ std::vector<Point2<T>> convex_hull_graham(std::vector<Point2<T>> points) {
   for (int i = 1; i < n; ++i)
     if (points[i] < points[0]) // lexicographical
       std::swap(points[0], points[i]);
-  std::sort(
-      points.begin() + 1, points.end(), [&points](Point2<T> p1, Point2<T> p2) {
-        Vector2 v1{points[0], p1}, v2{points[0], p2};
-        return cross(v1, v2) > 0 || (cross(v1, v2) == 0 && len2(v1) < len2(v2));
-      });
+  std::sort(points.begin() + 1, points.end(), [&points](Point2<T> p1, Point2<T> p2) {
+    Vector2 v1{points[0], p1}, v2{points[0], p2};
+    return cross(v1, v2) > 0 || (cross(v1, v2) == 0 && len2(v1) < len2(v2));
+  });
   points.push_back(points[0]);
   std::vector<Point2<T>> hull;
   for (int i = 0; i < std::ssize(points); ++i) {
     while (std::ssize(hull) >= 2 &&
-           cross(Vector2{hull.end()[-2], hull.end()[-1]},
-                 Vector2{hull.end()[-2], points[i]}) <= 0) {
+           cross(Vector2{hull.end()[-2], hull.end()[-1]}, Vector2{hull.end()[-2], points[i]}) <= 0) {
       Vector2 u{hull.end()[-2], hull.end()[-1]};
       Vector2 v{hull.end()[-1], points[i]};
       if (cross(u, v) > 0 || (cross(u, v) == 0 && dot(u, v) < 0))
@@ -464,8 +444,7 @@ std::vector<Point2<T>> convex_hull_andrew(std::vector<Point2<T>> points) {
     int sz0 = std::ssize(hull) - rot;
     for (auto A : points) {
       while (std::ssize(hull) - sz0 >= 2 &&
-             cross(Vector2{hull.end()[-2], hull.end()[-1]},
-                   Vector2{hull.end()[-1], A}) <= 0) {
+             cross(Vector2{hull.end()[-2], hull.end()[-1]}, Vector2{hull.end()[-1], A}) <= 0) {
         hull.pop_back();
       }
       hull.push_back(A);
