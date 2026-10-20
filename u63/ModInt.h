@@ -6,8 +6,7 @@
 
 namespace u63 {
 
-template <typename ModProvider>
-class ModularRing32 {
+template <typename ModProvider> class ModularRing32 {
   int32_t r{0};
 
 public:
@@ -29,8 +28,7 @@ public:
     return result;
   }
 
-  template <typename T>
-  explicit constexpr operator T() {
+  template <typename T> explicit constexpr operator T() {
     return static_cast<T>(r);
   }
 
@@ -94,7 +92,7 @@ public:
     return result;
   }
 
-  constexpr ModularRing32 inv() const { return ModularRing32{calcInverse(r)}; }
+  constexpr ModularRing32 inv() const { return ModularRing32{calc_inverse(r)}; }
 
   constexpr ModularRing32 &operator/=(ModularRing32 other) {
     return *this *= other.inv();
@@ -134,11 +132,11 @@ public:
   }
 
 private:
-  static constexpr int64_t calcInverse(int64_t a);
+  static constexpr int64_t calc_inverse(int64_t a);
 };
 
 template <typename ModProvider>
-constexpr int64_t ModularRing32<ModProvider>::calcInverse(int64_t x) {
+constexpr int64_t ModularRing32<ModProvider>::calc_inverse(int64_t x) {
   int64_t a{x}, b{mod()};
   int64_t ua{1}; // ua * x + va * mod() = a
   int64_t ub{0}; // ub * x + vb * mod() = b
