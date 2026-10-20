@@ -49,23 +49,6 @@ constexpr bool operator!=(Vector2<T> u, Vector2<T> v) {
 }
 
 template <typename T>
-constexpr bool operator<(Vector2<T> u, Vector2<T> v) {
-  return tie(u) < tie(v);
-}
-template <typename T>
-constexpr bool operator<=(Vector2<T> u, Vector2<T> v) {
-  return tie(u) <= tie(v);
-}
-template <typename T>
-constexpr bool operator>(Vector2<T> u, Vector2<T> v) {
-  return tie(u) > tie(v);
-}
-template <typename T>
-constexpr bool operator>=(Vector2<T> u, Vector2<T> v) {
-  return tie(u) >= tie(v);
-}
-
-template <typename T>
 constexpr Vector2<T> &operator+=(Vector2<T> &u, Vector2<T> v) {
   u.x += v.x, u.y += v.y;
   return u;
