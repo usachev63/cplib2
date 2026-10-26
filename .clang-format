@@ -2,3 +2,10 @@ BasedOnStyle: LLVM
 IndentWidth: 2
 ColumnLimit: 120
 BreakTemplateDeclarations: true
+AllowShortFunctionsOnASingleLine: All
+AllowShortIfStatementsOnASingleLine: WithoutElse
+AllowShortLoopsOnASingleLine: true
+AllowShortBlocksOnASingleLine: Empty
+AllowShortLambdasOnASingleLine: All
+AllowShortCaseLabelsOnASingleLine: true
+

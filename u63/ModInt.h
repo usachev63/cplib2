@@ -16,10 +16,8 @@ public:
 
   constexpr ModularRing32() : r{0} {}
   /*implicit*/ constexpr ModularRing32(int64_t value) {
-    if (value <= -mod() || value >= mod())
-      value %= mod();
-    if (value < 0)
-      value += mod();
+    if (value <= -mod() || value >= mod()) value %= mod();
+    if (value < 0) value += mod();
     r = value;
   }
   static constexpr ModularRing32 unsafe(int32_t value) {
@@ -35,8 +33,7 @@ public:
 
   constexpr ModularRing32 &operator+=(ModularRing32 other) {
     r += other.r;
-    if (r >= mod())
-      r -= mod();
+    if (r >= mod()) r -= mod();
     return *this;
   }
   constexpr friend ModularRing32 operator+(ModularRing32 lhs, ModularRing32 rhs) { return lhs += rhs; }
@@ -50,15 +47,13 @@ public:
 
   constexpr ModularRing32 &operator-=(ModularRing32 other) {
     r -= other.r;
-    if (r < 0)
-      r += mod();
+    if (r < 0) r += mod();
     return *this;
   }
   constexpr friend ModularRing32 operator-(ModularRing32 lhs, ModularRing32 rhs) { return lhs -= rhs; }
   constexpr ModularRing32 operator-() const {
     ModularRing32 neg{*this};
-    if (neg.r > 0)
-      neg.r = mod() - neg.r;
+    if (neg.r > 0) neg.r = mod() - neg.r;
     return neg;
   }
   constexpr ModularRing32 &operator--() const { return *this -= 1; }

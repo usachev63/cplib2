@@ -10,10 +10,8 @@ namespace u63 {
 
 template <typename T>
 constexpr int sgn(T x) {
-  if (x > 0)
-    return +1;
-  if (x < 0)
-    return -1;
+  if (x > 0) return +1;
+  if (x < 0) return -1;
   return 0;
 }
 
@@ -200,8 +198,7 @@ constexpr bool contains(Line2<long long> l, Point2<long long> P) { return l(P) =
 
 constexpr std::optional<Point2<double>> intersect(Line2<long long> l1, Line2<long long> l2) {
   auto det = l1.A * l2.B - l1.B * l2.A;
-  if (det == 0)
-    return std::nullopt;
+  if (det == 0) return std::nullopt;
   auto det_x = l1.C * l2.B - l1.B * l2.C;
   auto det_y = l1.A * l2.C - l1.C * l2.A;
   return {
@@ -213,8 +210,7 @@ constexpr double dist(Line2<long long> l, Point2<long long> P) {
 }
 
 constexpr double dist(Line2<long long> l1, Line2<long long> l2) {
-  if (!parallel(l1, l2))
-    return 0.0;
+  if (!parallel(l1, l2)) return 0.0;
   Line2 n1 = normalize(l1);
   Line2 n2 = normalize(l2);
   double c1 = n1.C;
@@ -323,8 +319,7 @@ constexpr bool contains(LineSegment2<long long> f, Point2<long long> P) {
 }
 
 constexpr bool contains1(LineSegment2<long long> f, Point2<long long> P) {
-  if (degenerate(f))
-    return f.A == P;
+  if (degenerate(f)) return f.A == P;
   return contains(f, P);
 }
 
@@ -336,32 +331,24 @@ constexpr bool check_intersect(LineSegment2<long long> f, LineSegment2<long long
   auto [A, B] = f;
   auto [C, D] = g;
   Vector2 AB{A, B}, AC{A, C}, AD{A, D};
-  if (sgn(cross(AB, AC)) * sgn(cross(AB, AD)) != -1)
-    return false;
+  if (sgn(cross(AB, AC)) * sgn(cross(AB, AD)) != -1) return false;
   Vector2 CD{C, D}, CA{C, A}, CB{C, B};
-  if (sgn(cross(CD, CA)) * sgn(cross(CD, CB)) != -1)
-    return false;
+  if (sgn(cross(CD, CA)) * sgn(cross(CD, CB)) != -1) return false;
   return true;
 }
 
 constexpr bool check_intersect1(LineSegment2<long long> f, LineSegment2<long long> g) {
-  if (degenerate(f))
-    return contains1(g, f.A);
-  if (degenerate(g))
-    return contains1(f, g.A);
+  if (degenerate(f)) return contains1(g, f.A);
+  if (degenerate(g)) return contains1(f, g.A);
   return check_intersect(f, g);
 }
 
 std::variant<std::monostate, Point2<double>, LineSegment2<long long>> constexpr intersect1(LineSegment2<long long> f,
                                                                                            LineSegment2<long long> g) {
-  if (!check_intersect1(f, g))
-    return {};
-  if (degenerate(f))
-    return f.A;
-  if (degenerate(g))
-    return g.A;
-  if (!parallel(f, g))
-    return *intersect(Line2{f.A, f.B}, Line2{g.A, g.B});
+  if (!check_intersect1(f, g)) return {};
+  if (degenerate(f)) return f.A;
+  if (degenerate(g)) return g.A;
+  if (!parallel(f, g)) return *intersect(Line2{f.A, f.B}, Line2{g.A, g.B});
 
   Point2 A{f.A}, B{f.B}, C{g.A}, D{g.B};
   Vector2 AB{A, B}, CD{C, D};
@@ -374,10 +361,8 @@ std::variant<std::monostate, Point2<double>, LineSegment2<long long>> constexpr 
     std::swap(tC, tD);
   }
 
-  if (tB == tC)
-    return B;
-  if (tD == tA)
-    return A;
+  if (tB == tC) return B;
+  if (tD == tA) return A;
 
   return LineSegment2{
       tC <= tA ? A : C,
@@ -397,18 +382,15 @@ constexpr double dist(LineSegment2<T> f, Point2<T> P) {
 
 template <typename T>
 constexpr double dist(LineSegment2<T> f, LineSegment2<T> g) {
-  if (check_intersect1(f, g))
-    return 0.0;
+  if (check_intersect1(f, g)) return 0.0;
   return std::min({dist(f, g.A), dist(f, g.B), dist(g, f.A), dist(g, f.B)});
 }
 
 template <typename T>
 std::vector<Point2<T>> convex_hull_graham(std::vector<Point2<T>> points) {
   int n = std::ssize(points);
-  if (n == 0)
-    return {};
-  if (n == 1)
-    return {points[0], points[0]};
+  if (n == 0) return {};
+  if (n == 1) return {points[0], points[0]};
 
   for (int i = 1; i < n; ++i)
     if (points[i] < points[0]) // lexicographical
@@ -424,8 +406,7 @@ std::vector<Point2<T>> convex_hull_graham(std::vector<Point2<T>> points) {
            cross(Vector2{hull.end()[-2], hull.end()[-1]}, Vector2{hull.end()[-2], points[i]}) <= 0) {
       Vector2 u{hull.end()[-2], hull.end()[-1]};
       Vector2 v{hull.end()[-1], points[i]};
-      if (cross(u, v) > 0 || (cross(u, v) == 0 && dot(u, v) < 0))
-        break;
+      if (cross(u, v) > 0 || (cross(u, v) == 0 && dot(u, v) < 0)) break;
       hull.pop_back();
     }
     hull.push_back(points[i]);
@@ -435,8 +416,7 @@ std::vector<Point2<T>> convex_hull_graham(std::vector<Point2<T>> points) {
 
 template <typename T>
 std::vector<Point2<T>> convex_hull_andrew(std::vector<Point2<T>> points) {
-  if (points.empty())
-    return {};
+  if (points.empty()) return {};
   std::sort(points.begin(), points.end());
   points.erase(std::unique(points.begin(), points.end()), points.end());
   std::vector<Point2<T>> hull;
