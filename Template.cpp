@@ -10,7 +10,7 @@ template <typename Arg, typename... Args>
 void debug_out(Arg &&arg, Args &&...args) {
   std::cerr << " " << arg, debug_out(std::forward<Args>(args)...);
 }
-#ifdef U63
+#ifdef LOCAL
 #define DEBUG(...) std::cerr << "[" #__VA_ARGS__ "]:", debug_out(__VA_ARGS__)
 #else
 #define DEBUG(...) 1337
