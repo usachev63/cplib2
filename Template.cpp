@@ -33,10 +33,5 @@ void run() {}
 
 int32_t main() {
   ios::sync_with_stdio(false), cin.tie(nullptr);
-
-  int tests = 1;
-  cin >> tests;
-  for (int testNo = 1; testNo <= tests; ++testNo) {
-    run();
-  }
+  run();
 }
